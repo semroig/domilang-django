@@ -1,0 +1,26 @@
+{% extends "mvp/layout.html" %}
+
+{% block body %}
+  <div class="container">
+    <div class="m-5 px-5">
+      <div class="row">
+        <h2 class="celeste">Our teachers:</h2>
+      </div>
+
+      <div class="row mt-4">
+        {% for usuario in usuarios %}
+        <div class="col-md-4">
+          <div class="carta card">
+            <div class="card-body">
+              <h4 class="celeste card-title">{{ usuario.first_name }} {{ usuario.last_name }}</h4>
+              <p class="gris card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="{% url 'teacher' usuario.id %}" class="boton_pri btn btn-primary">Book a lesson</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

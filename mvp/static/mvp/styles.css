@@ -1,0 +1,58 @@
+body {
+    background-color: #F3F5F8;
+    color: #2D2D2D;
+}
+
+.barra {
+    border-bottom: 1px solid #DDE3EE;
+    background-color: white;
+}
+
+.gris {
+    color: #2D2D2D;
+}
+
+.celeste {
+    color: #219EBC;
+}
+
+.boton_pri {
+    background-color: #FFB703;
+    border-color: #FFB703;
+    color: #2D2D2D;
+}
+
+.boton_pri:hover {
+    background-color: #FFB703;
+    border-color: #FFB703;
+    color: #2D2D2D;
+}
+
+.boton_sec {
+    color: #2D2D2D;
+}
+
+.boton_sec:hover {
+    background-color: #2D2D2D;
+    border-color: #2D2D2D;
+}
+
+.logo {
+    color: #FFB703;
+    font-size: xx-large;
+}
+
+.logo:hover {
+    color: #FFB703;
+}
+
+.carta {
+    border-color: #DDE3EE;
+}
+
+.foto-perfil {
+    width:13rem;
+    height:13rem;
+    object-fit:cover;
+    border-radius:50%;
+}
