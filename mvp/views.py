@@ -42,12 +42,8 @@ def teacher(request, teacher_id):
 @api_view(['POST'])
 def login_view(request):
 
-    print(request.data)
-    print(request.method)
-
-    body = request.data
-
     # Attempt to sign user in
+    body = request.data
     username = body["username"]
     password = body["password"]
     user = authenticate(request, username=username, password=password)
@@ -59,31 +55,35 @@ def login_view(request):
     else:
         return Response(status=status.HTTP_401_UNAUTHORIZED, data={"message": "invalid credentials"})
 
+@api_view(['POST'])
 def register(request):
-    if request.method == "POST":
-        username = request.POST["username"]
-        email = request.POST["email"]
 
-        # Ensure password matches confirmation
-        password = request.POST["password"]
-        confirmation = request.POST["confirmation"]
-        if password != confirmation:
-            return render(request, "mvp/register.html", {
-                "message": "Passwords must match."
-            })
+    # Parseo data
+    body = request.data
+    username = body["username"]
+    email = body["email"]
 
-        # Attempt to create new user
-        try:
-            user = User.objects.create_user(username, email, password)
-            user.save()
-        except IntegrityError:
-            return render(request, "mvp/register.html", {
-                "message": "Username already taken."
-            })
-        login(request, user)
-        return HttpResponseRedirect(reverse("index"))
-    else:
-        return render(request, "mvp/register.html")
+    # Ensure password matches confirmation
+    password = body["password"]
+    confirmation = body["confirmation"]
+    if password != confirmation:
+        # La contraseña y la confirmación no son iguales
+        data={"message": "password and confirmation must match"}
+        return Response(status=status.HTTP_412_PRECONDITION_FAILED, data=data)
+
+    # Attempt to create new user
+    try:
+        user = User.objects.create_user(username, email, password)
+        user.save()
+    except IntegrityError:
+        # El username ya existe
+        data={"message": "Username already taken."}
+        return Response(status=status.HTTP_409_CONFLICT, data=data)
+
+    # Además de registrarlo, ya se logea
+    login(request, user)
+    data={"message": "successful sign up"}
+    return Response(status=status.HTTP_200_OK, data=data)
 
 @api_view(['GET'])
 def logout_view(request):
