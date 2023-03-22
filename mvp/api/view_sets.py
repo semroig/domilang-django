@@ -35,6 +35,21 @@ class ClaseViewSet(viewsets.ModelViewSet):
     queryset = Clase.objects.all()
     serializer_class = ClaseSerializer
 
+    def get_queryset(self):
+        queryset = Clase.objects.all()
+        
+        # Filtro por dia
+        day = self.request.query_params.get('day')
+        if day is not None:
+            queryset = queryset.filter(dia=day)
+        
+        # Filtro por teacher
+        teacher = self.request.query_params.get('teacher')
+        if teacher is not None:
+            queryset = queryset.filter(teacher=teacher)
+
+        return queryset
+
 class DisponibleViewSet(viewsets.ModelViewSet):
     authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated]
