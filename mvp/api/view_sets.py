@@ -57,6 +57,21 @@ class DisponibleViewSet(viewsets.ModelViewSet):
     queryset = Disponible.objects.all()
     serializer_class = DisponibleSerializer
 
+    def get_queryset(self):
+        queryset = Disponible.objects.all()
+        
+        # Filtro por dia
+        day = self.request.query_params.get('day')
+        if day is not None:
+            queryset = queryset.filter(dia=day)
+        
+        # Filtro por teacher
+        teacher = self.request.query_params.get('teacher')
+        if teacher is not None:
+            queryset = queryset.filter(teacher=teacher)
+
+        return queryset
+
 class PaymentViewSet(viewsets.ModelViewSet):
     authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated]

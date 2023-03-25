@@ -27,15 +27,15 @@ class Clase(models.Model):
 class Disponible(models.Model):
 
     DAYS_CHOICES = [
-        ('Lun', 'Lunes'),
-        ('Mar', 'Martes'),
-        ('Mie', 'Miercoles'),
-        ('Jue', 'Jueves'),
-        ('Vie', 'Viernes'),
-        ('Sab', 'Sabado'),
+        ('Monday', 'Monday'),
+        ('Tuesday', 'Tuesday'),
+        ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'),
+        ('Friday', 'Friday'),
+        ('Saturday', 'Saturday'),
     ]
 
-    dia = models.CharField(max_length=3, choices=DAYS_CHOICES)
+    dia = models.CharField(max_length=9, choices=DAYS_CHOICES)
     hora = models.TimeField()
     teacher = models.ForeignKey(User, on_delete=models.CASCADE)
 
